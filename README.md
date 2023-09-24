@@ -8,4 +8,4 @@
 
 # Youtube Video
 
-[View on Youtube ⚡️](https://www.youtube.com/channel/UC33JiQ6BDUqijK9XDzcM_hA?sub_confirmation=1)
+[View on Youtube ⚡️](https://www.youtube.com/watch?v=v9d7Qh-SUmQ)
