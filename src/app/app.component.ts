@@ -1,38 +1,33 @@
-import { Component, OnDestroy, OnInit, VERSION } from '@angular/core';
-
-import { fromEvent, merge, of, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: [ './app.component.css' ]
 })
-export class AppComponent implements OnInit, OnDestroy {
-  networkStatus: any;
-  networkStatus$: Subscription = Subscription.EMPTY;
+export class AppComponent  {
+  name = 'Angular Html To Pdf ';
 
-  constructor() {}
+  @ViewChild('pdfTable', {static: false}) pdfTable: ElementRef;
 
-  ngOnInit(): void {
-    this.checkNetworkStatus();
-  }
 
-  ngOnDestroy(): void {
-    this.networkStatus$.unsubscribe();
-  }
+  public downloadAsPDF() {
+    const doc = new jsPDF();
 
-  checkNetworkStatus() {
-    this.networkStatus = navigator.onLine;
-    this.networkStatus$ = merge(
-      of(null),
-      fromEvent(window, 'online'),
-      fromEvent(window, 'offline')
-    )
-      .pipe(map(() => navigator.onLine))
-      .subscribe(status => {
-        console.log('status', status);
-        this.networkStatus = status;
-      });
+    const specialElementHandlers = {
+      '#editor': function (element, renderer) {
+        return true;
+      }
+    };
+
+    const pdfTable = this.pdfTable.nativeElement;
+
+    doc.fromHTML(pdfTable.innerHTML, 15, 15, {
+      width: 190,
+      'elementHandlers': specialElementHandlers
+    });
+
+    doc.save('tableToPdf.pdf');
   }
 }
