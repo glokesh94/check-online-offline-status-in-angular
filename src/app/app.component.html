@@ -1,1 +1,15 @@
-Internet Status
+<h1>Internet Status</h1>
+
+<div
+  class="widget-content-online header-user-info ml-3"
+  *ngIf="internetStatus"
+>
+  &#9679; Online
+</div>
+<div
+  class="widget-content-offline header-user-info ml-3"
+  *ngIf="!internetStatus"
+>
+  &#9679; Offline
+</div>
+
